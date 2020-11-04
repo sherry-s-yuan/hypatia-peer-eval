@@ -1,0 +1,14 @@
+ {
+ "docid": "868.2.5",
+ "docname": "Assignment.ezt *",
+ "userid": 1292,
+ "username": "sherry yuan",
+ "mathid": "tex4.mth1292-7",
+ "version": 38,
+ "problem": 2,
+ "value": {
+  "id": "chr1292-316$chr1292-316",
+  "type": "math-error",
+  "hint": "I think this may be an error related to the <a class=\"checkmath-hint tip-wideForInspector\" href=\"https://en.wikipedia.org/wiki/Derivative#Rules\" data-tooltip=\"Click to open on the side.\" data-position=\"bottom center\" data-tooltip2=\"Ctrl + click to open in default browser\">derivative constant rule</a>"
+ }
+}

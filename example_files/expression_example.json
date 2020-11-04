@@ -1,0 +1,183 @@
+ {
+ "docid": "868.2.5",
+ "docname": "Assignment.ezt *",
+ "userid": 1292,
+ "username": "sherry yuan",
+ "mathid": "tex4.mth1292-7",
+ "version": 38,
+ "problem": 2,
+ "value": [
+  [
+   {
+    "command": "Plus",
+    "id": "chr1292-237$chr1292-239",
+    "children": [
+     {
+      "command": "Symbol",
+      "value": "a",
+      "id": "chr1292-237$chr1292-237"
+     },
+     {
+      "command": "Symbol",
+      "value": "b",
+      "id": "chr1292-239$chr1292-239"
+     }
+    ]
+   },
+   {
+    "id": "chr1292-220$chr1292-220",
+    "command": "="
+   },
+   {
+    "command": "Number",
+    "value": "3",
+    "id": "chr1292-240$chr1292-240"
+   }
+  ],
+  [
+   {
+    "command": "Plus",
+    "id": "chr1292-250$chr1292-252",
+    "children": [
+     {
+      "command": "Number",
+      "value": "3",
+      "id": "chr1292-250$chr1292-250"
+     },
+     {
+      "command": "Number",
+      "value": "4",
+      "id": "chr1292-252$chr1292-252"
+     }
+    ]
+   },
+   {
+    "id": "chr1292-247$chr1292-247",
+    "command": "="
+   },
+   {
+    "command": "Number",
+    "value": "7",
+    "id": "chr1292-254$chr1292-254"
+   }
+  ],
+  [
+   {
+    "command": "Number",
+    "value": "5",
+    "id": "chr1292-264$chr1292-264"
+   },
+   {
+    "id": "chr1292-261$chr1292-261",
+    "command": "="
+   },
+   {
+    "command": "Number",
+    "value": "8",
+    "id": "chr1292-265$chr1292-265"
+   }
+  ],
+  [
+   {
+    "command": "Multiply",
+    "id": "chr1292-275$chr1292-277",
+    "children": [
+     {
+      "command": "Number",
+      "value": "3",
+      "id": "chr1292-275$chr1292-275"
+     },
+     {
+      "command": "Number",
+      "value": "5",
+      "id": "chr1292-277$chr1292-277"
+     }
+    ]
+   },
+   {
+    "id": "chr1292-272$chr1292-272",
+    "command": "="
+   },
+   {
+    "command": "Number",
+    "value": "16",
+    "id": "chr1292-278$chr1292-279"
+   }
+  ],
+  [
+   {
+    "command": "Symbol",
+    "value": "l",
+    "id": "chr1292-310$chr1292-310"
+   },
+   {
+    "id": "chr1292-307$chr1292-307",
+    "command": "="
+   },
+   {
+    "command": "Plus",
+    "id": "chr1292-311$chr1292-314",
+    "children": [
+     {
+      "command": "Multiply",
+      "id": "chr1292-311$chr1292-312",
+      "children": [
+       {
+        "command": "Number",
+        "value": "3",
+        "id": "chr1292-311$chr1292-311"
+       },
+       {
+        "command": "Symbol",
+        "value": "x",
+        "id": "chr1292-312$chr1292-312"
+       }
+      ]
+     },
+     {
+      "command": "Number",
+      "value": "5",
+      "id": "chr1292-314$chr1292-314"
+     }
+    ]
+   }
+  ],
+  [
+   {
+    "command": "Derivative",
+    "id": "chr1292-291$chr1292-315",
+    "children": [
+     {
+      "command": "Symbol",
+      "value": "l",
+      "id": "chr1292-315$chr1292-315"
+     },
+     {
+      "command": "ExpressionList",
+      "id": "chr1292-299$chr1292-299",
+      "children": [
+       {
+        "command": "Symbol",
+        "value": "x",
+        "id": "chr1292-299$chr1292-299"
+       }
+      ]
+     },
+     {
+      "command": "Number",
+      "value": "1"
+     }
+    ]
+   },
+   {
+    "id": "chr1292-286$chr1292-286",
+    "command": "="
+   },
+   {
+    "command": "Number",
+    "value": "3",
+    "id": "chr1292-316$chr1292-316"
+   }
+  ]
+ ]
+}
