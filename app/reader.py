@@ -1,7 +1,7 @@
 # a builder
 import json
-from assignment import Assignment
-from answer import Answer
+from app.assignment import Assignment
+from app.answer import Answer
 
 
 class Reader:

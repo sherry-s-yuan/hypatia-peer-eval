@@ -1,4 +1,4 @@
-from answer import Answer
+from app.answer import Answer
 
 
 class Assignment:
