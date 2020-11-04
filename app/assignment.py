@@ -14,5 +14,3 @@ class Assignment:
 
     def add_answer(self, answer: Answer):
         self.answers.append(answer)
-
-
