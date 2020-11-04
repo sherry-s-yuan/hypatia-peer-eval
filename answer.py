@@ -1,7 +1,7 @@
 from block import Block
 
 class Answer:
-  def __init__(self, mathid, version, problem, block):
+  def __init__(self, mathid: str, version: int, problem: int, block: dict):
     self.mathid = mathid
     self.version = version
     self.problem = problem

@@ -1,7 +1,7 @@
 
 
 class Expression:
-  def __init__(self, command, id, children=[]):
+  def __init__(self, command: str, id: str, children:['Expression']=[]):
     self.command = command
     self.id = id
     self.children = children
@@ -9,10 +9,11 @@ class Expression:
     self.hint = None
 
   @classmethod
-  def from_json(cls, exp):
+  def from_json(cls, exp:'Expression'):
     if 'children' not in exp:
       return Expression(exp['command'], exp['id'])
-    return Expression(exp['command'], exp['id'], exp['children'])
+    children = [Expression.from_json(child) for child in exp['children']]
+    return Expression(exp['command'], exp['id'], children)
 
   def has_error(self, hint):
     self.error = True

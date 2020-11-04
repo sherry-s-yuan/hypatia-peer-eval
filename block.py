@@ -1,7 +1,7 @@
 from equation import Equation
 
 class Block:
-  def __init__(self, raw_lines, lines=[]):
+  def __init__(self, raw_lines: dict, lines:[Equation]=[]):
     self.raw_lines = raw_lines
     self.lines = lines
 
