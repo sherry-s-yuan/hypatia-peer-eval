@@ -1,4 +1,4 @@
-from expression import Expression
+from app.expression import Expression
 
 
 class Equation:

@@ -1,4 +1,4 @@
-from equation import Equation
+from app.equation import Equation
 
 class Block:
   def __init__(self, raw_lines: dict, lines:[Equation]=[]):

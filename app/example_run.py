@@ -1,4 +1,4 @@
-from reader import Reader
+from app.reader import Reader
 
 reader = Reader()
 assignment = reader.from_json_file('./example_files/block_example.json')

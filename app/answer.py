@@ -1,4 +1,4 @@
-from block import Block
+from app.block import Block
 
 class Answer:
   def __init__(self, mathid: str, version: int, problem: int, block: dict):
