@@ -2,7 +2,7 @@ from app.expression import Expression
 
 
 class Equation:
-    def __init__(self, raw_expression: dict, expressions: [Expression] = []):
+    def __init__(self, raw_expression: dict, expressions: [Expression] = None):
         self.raw_expression = raw_expression
         self.expressions = expressions
 
