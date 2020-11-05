@@ -1,5 +1,6 @@
 class Expression:
-    def __init__(self, command: str, value: str, id: str, children: ['Expression']):
+    def __init__(self, command: str, value: str, id: str,
+                 children: ['Expression']):
         self.command = command
         self.id = id
         self.value = value
@@ -18,18 +19,18 @@ class Expression:
         return Expression(command, value, id, children)
 
     def to_json(self):
-      json_obj = {}
-      if self.command is not None:
-        json_obj["command"] = self.command
-      if self.value is not None:
-        json_obj["value"] = self.value
-      if self.id is not None:
-        json_obj["id"] = self.id
+        json_obj = {}
+        if self.command is not None:
+            json_obj["command"] = self.command
+        if self.value is not None:
+            json_obj["value"] = self.value
+        if self.id is not None:
+            json_obj["id"] = self.id
 
-      if self.children is None:
+        if self.children is None:
+            return json_obj
+        json_obj["children"] = [child.to_json() for child in self.children]
         return json_obj
-      json_obj["children"] = [child.to_json() for child in self.children]
-      return json_obj
 
     def has_error(self, hint):
         self.error = True
