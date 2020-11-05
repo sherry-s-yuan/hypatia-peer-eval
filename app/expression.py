@@ -31,6 +31,6 @@ class Expression:
       json_obj["children"] = [child.to_json() for child in self.children]
       return json_obj
 
-    def has_error(self, hint):
+    def has_error(self, hint: str):
         self.error = True
         self.hint = hint

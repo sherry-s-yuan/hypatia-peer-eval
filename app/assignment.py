@@ -21,7 +21,7 @@ class Assignment:
                 return answer
         return None
 
-    def to_json(self, problem):
+    def to_json(self, problem: int):
         answer = self.answer_to_problem(problem)
         if answer is None:
             return None

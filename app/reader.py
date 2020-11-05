@@ -5,13 +5,13 @@ from app.answer import Answer
 
 
 class Reader:
-    def from_json_file(self, fn):
+    def from_json_file(self, fn: str):
         with open(fn) as f:
             data = json.load(f)
         print('API response data: ', data)
         return self.from_json_stream(data)
 
-    def from_json_stream(self, data):
+    def from_json_stream(self, data: dict):
         docid = data['docid']
         docname = data['docname']
         userid = data['userid']

@@ -8,6 +8,7 @@ class Answer:
         self.problem = problem
         self.raw_lines = raw_lines
         self.lines = lines
+
     @classmethod
     def from_json(cls, mathid: str, version: int, problem: int, raw_lines: dict):
         lines = []
