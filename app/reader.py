@@ -11,7 +11,8 @@ class Reader:
         print('API response data: ', data)
         return self.from_json_stream(data)
 
-    def from_json_stream(self, data: dict):
+    @staticmethod
+    def from_json_stream(data: dict):
         docid = data['docid']
         docname = data['docname']
         userid = data['userid']

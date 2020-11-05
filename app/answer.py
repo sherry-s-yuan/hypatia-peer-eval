@@ -3,7 +3,7 @@ from app.equation import Equation
 
 class Answer:
     def __init__(self, mathid: str, version: int, problem: int, raw_lines: dict,
-                 lines: [Equation] = []):
+                 lines: [Equation] = None):
         self.mathid = mathid
         self.version = version
         self.problem = problem
