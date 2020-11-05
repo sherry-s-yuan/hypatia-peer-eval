@@ -10,7 +10,8 @@ print('Reconstructed data:', assignment.to_json(2))
 print()
 
 # print the first line's first expression json
-print("First line's first expression: ", assignment.answers[0].lines[0].expressions[0].to_json())
+print("First line's first expression: ",
+      assignment.answers[0].lines[0].expressions[0].to_json())
 print()
 
 # print first line's json

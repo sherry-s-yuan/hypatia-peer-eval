@@ -2,7 +2,8 @@ from app.equation import Equation
 
 
 class Answer:
-    def __init__(self, mathid: str, version: int, problem: int, raw_lines: dict, lines: [Equation] = None):
+    def __init__(self, mathid: str, version: int, problem: int, raw_lines: dict,
+                 lines: [Equation] = None):
         self.mathid = mathid
         self.version = version
         self.problem = problem
@@ -10,7 +11,8 @@ class Answer:
         self.lines = lines
 
     @classmethod
-    def from_json(cls, mathid: str, version: int, problem: int, raw_lines: dict):
+    def from_json(cls, mathid: str, version: int, problem: int,
+                  raw_lines: dict):
         lines = []
         for line in raw_lines:
             lines.append(Equation.from_json(line))

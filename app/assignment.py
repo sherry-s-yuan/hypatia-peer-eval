@@ -25,11 +25,10 @@ class Assignment:
         answer = self.answer_to_problem(problem)
         if answer is None:
             return None
-        json_obj = {}
-        json_obj['docid'] = self.docid
-        json_obj['docname'] = self.docname
-        json_obj['userid'] = self.userid
-        json_obj['username'] = self.username
+        json_obj = {
+            'docid': self.docid,
+            'docname': self.docname,
+            'userid': self.userid,
+            'username': self.username}
         json_obj.update(answer.to_json())
         return json_obj
-
