@@ -7,9 +7,9 @@ app = socketio.WSGIApp(sio)
 hintCounter = 1
 
 
-# return all elements containing key <key> set to value <value> based on
-# https://stackoverflow.com/questions/9807634/find-all-occurrences-of-a-key
-# -in-nested-dictionaries-and-lists
+# return all elements containing key <key> set to value <value>
+# based on https://stackoverflow.com/questions/9807634/
+# find-all-occurrences-of-a-key-in-nested-dictionaries-and-lists
 def gen_dict_extract(var, key, value):
     if isinstance(var, list):
         for d in var:
@@ -39,8 +39,10 @@ def message_expressions(sid, data):
     # parser json to python data structure
     record = json.loads(data)
 
-    # demo: show a yellow box around each plus expression Note: make sure to
-    # reduce opacity of the color (37 below) otherwise it will cover the math
+    # demo:
+    #   show a yellow box around each plus expression
+    #   Note: make sure to reduce opacity of the color (37 below) otherwise it
+    #   will cover the math
     for node in list(gen_dict_extract(record, 'command', 'Plus')):
         sio.emit('add_box', json.dumps({
             "mathid": record["mathid"],

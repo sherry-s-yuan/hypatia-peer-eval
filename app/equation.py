@@ -12,3 +12,6 @@ class Equation:
         for exp in raw_expression:
             expressions.append(Expression.from_json(exp))
         return Equation(raw_expression, expressions)
+
+    def to_json(self):
+        return [exp.to_json() for exp in self.expressions]
