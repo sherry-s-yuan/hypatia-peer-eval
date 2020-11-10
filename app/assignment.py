@@ -13,6 +13,10 @@ class Assignment:
         self.answers = []
 
     def add_answer(self, answer: Answer):
+        for i, a in enumerate(self.answers):
+            if a.mathid == answer.mathid:
+                self.answers[i] = answer
+                return
         self.answers.append(answer)
 
     def answer_to_problem(self, problem):

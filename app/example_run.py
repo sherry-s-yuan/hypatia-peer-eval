@@ -3,6 +3,10 @@ from app.reader import Reader
 reader = Reader()
 assignment = reader.from_json_file('../example_files/block_example.json')
 
+api_response = reader.data_from_json('../example_files/block_example.json')
+reconstructed_response = assignment.to_json(2)
+print(api_response == reconstructed_response)
+
 # assignment -> answer -> lines -> equation -> expression ->
 
 # convert answer to question 2 back to json
