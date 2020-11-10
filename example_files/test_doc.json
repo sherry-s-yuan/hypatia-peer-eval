@@ -1,0 +1,144 @@
+{
+"docid": "869.4.3",
+"docname": "Assignment_Test.ezt *",
+"userid": 1293,
+"username": "ArKane",
+"mathid": "tex8.mth1293-3",
+"version": 38,
+"problem": 2,
+"value": [
+[
+{
+"command": "Minus",
+"id": "chr1293-67$chr1293-71",
+"children": [
+{
+"command": "Multiply",
+"id": "chr1293-67$chr1293-68",
+"children": [
+{
+"command": "Number",
+"value": "2",
+"id": "chr1293-67$chr1293-67"
+},
+{
+"command": "Symbol",
+"value": "x",
+"id": "chr1293-68$chr1293-68"
+}
+]
+},
+{
+"command": "Multiply",
+"id": "chr1293-70$chr1293-71",
+"children": [
+{
+"command": "Number",
+"value": "3",
+"id": "chr1293-70$chr1293-70"
+},
+{
+"command": "Symbol",
+"value": "x",
+"id": "chr1293-71$chr1293-71"
+}
+]
+}
+]
+},
+{
+"id": "chr1293-64$chr1293-64",
+"command": "="
+},
+{
+"command": "Minus",
+"id": "chr1293-72$chr1293-74",
+"children": [
+{
+"command": "Number",
+"value": "6",
+"id": "chr1293-72$chr1293-72"
+},
+{
+"command": "Number",
+"value": "5",
+"id": "chr1293-74$chr1293-74"
+}
+]
+}
+],
+[
+{
+"command": "Neg",
+"id": "chr1293-84$chr1293-85",
+"children": [
+{
+"command": "Symbol",
+"value": "x",
+"id": "chr1293-85$chr1293-85"
+}
+]
+},
+{
+"id": "chr1293-81$chr1293-81",
+"command": "="
+},
+{
+"command": "Number",
+"value": "1",
+"id": "chr1293-86$chr1293-86"
+}
+],
+[
+{
+"command": "Symbol",
+"value": "x",
+"id": "chr1293-96$chr1293-96"
+},
+{
+"id": "chr1293-93$chr1293-93",
+"command": "="
+},
+{
+"command": "Neg",
+"id": "chr1293-99$chr1293-100",
+"children": [
+{
+"command": "Number",
+"value": "2",
+"id": "chr1293-100$chr1293-100"
+}
+]
+}
+]
+]
+}
+result:
+{
+"docid": "869.4.3",
+"docname": "Assignment_Test.ezt *",
+"userid": 1293,
+"username": "ArKane",
+"mathid": "tex8.mth1293-3",
+"version": 38,
+"problem": 2,
+"value": {
+"id": "chr1293-72$chr1293-74",
+"type": "math-error"
+}
+}
+{'docid': '869.4.3', 'docname': 'Assignment_Test.ezt *', 'userid': 1293, 'username': 'ArKane', 'mathid': 'tex8.mth1293-3', 'version': 38, 'problem': 2, 'value': {'id': 'chr1293-72$chr1293-74', 'type': 'math-error'}}
+result:
+{
+"docid": "869.4.3",
+"docname": "Assignment_Test.ezt *",
+"userid": 1293,
+"username": "ArKane",
+"mathid": "tex8.mth1293-3",
+"version": 38,
+"problem": 2,
+"value": {
+"id": "chr1293-86$chr1293-86",
+"type": "math-error"
+}
+}
