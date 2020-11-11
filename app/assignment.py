@@ -1,5 +1,5 @@
 from app.answer import Answer
-
+import random
 
 class Assignment:
     answers: [Answer]
@@ -19,20 +19,41 @@ class Assignment:
                 return
         self.answers.append(answer)
 
-    def answer_to_problem(self, problem):
+    def answer_of_problem(self, problem) -> [Answer]:
+        result = []
         for answer in self.answers:
             if answer.problem == problem:
-                return answer
-        return None
+                result.append(answer)
+        return result
 
     def to_json(self, problem: int):
-        answer = self.answer_to_problem(problem)
-        if answer is None:
+        answers = self.answer_of_problem(problem)
+        if answers == []:
             return None
-        json_obj = {
-            'docid': self.docid,
-            'docname': self.docname,
-            'userid': self.userid,
-            'username': self.username}
-        json_obj.update(answer.to_json())
-        return json_obj
+        result = []
+        for answer in answers:
+            json_obj = {
+                'docid': self.docid,
+                'docname': self.docname,
+                'userid': self.userid,
+                'username': self.username}
+            json_obj.update(answer.to_json())
+        result.append(json_obj)
+        return result
+
+    def find_exp_with_id(self, id: str):
+        for answer in self.answers:
+            exp = answer.find_exp_with_id(id)
+            if exp is not None: return exp
+        return None
+
+    def find_answer_with_mathid(self, id):
+        for answer in self.answers:
+            if answer.mathid == id:
+                return answer
+
+
+
+
+    def __eq__(self, other):
+        return self.docid == other.docid

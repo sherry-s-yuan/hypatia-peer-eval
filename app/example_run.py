@@ -1,7 +1,7 @@
 from app.reader import Reader
 
 reader = Reader()
-assignment = reader.from_json_file('../example_files/block_example.json')
+assignment = reader.assignment_from_json_file('../example_files/block_example.json')
 
 api_response = reader.data_from_json('../example_files/block_example.json')
 reconstructed_response = assignment.to_json(2)
