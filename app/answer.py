@@ -2,7 +2,7 @@ from app.equation import Equation
 import random
 
 class Answer:
-    def __init__(self, mathid: str, version: int, problem: int, raw_lines: dict,
+    def __init__(self, mathid: str, version: int, problem: int, raw_lines: [],
                  lines: [Equation] = None):
         self.mathid = mathid
         self.version = version
