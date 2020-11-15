@@ -43,8 +43,8 @@ def message_expressions(sid, data):
   # parser json to python data structure
   record = json.loads(data)
   reader.assignment_from_json_stream(record)
-  print('Number of Assignments', len(reader.assignments))
-  print('Number of Answers', len(reader.assignments[0].answers))
+  print('Number of Assignments:', len(reader.assignments))
+  print('Number of Answers:', len(reader.assignments[0].answers))
 
   # # demo:
   # #   show a yellow box around each plus expression
