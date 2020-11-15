@@ -78,14 +78,24 @@ def message_result(sid, data):
   # parser json to python data structure
   record = json.loads(data)
   hint = record['value']['hint'] if 'hint' in record['value'] else None
-  if 'id' in record['value']:
-    reader.add_error(record['docid'], record['problem'], record['value']['id'], record['value']['type'], hint)
-    print("Error added to", record['docid'], record['problem'], record['value']['id'], record['value']['type'], hint)
+  # if 'id' in record['value']:
+  reader.add_error(record['docid'], record['problem'], record['value']['id'], record['value']['type'], hint)
+  print("Error added to", record['docid'], record['problem'], record['value']['id'], record['value']['type'], hint)
   print(reader.assignments[0].to_json(2))
 
   assignment = reader.find_assign_with_id(record['docid'])
   answer = assignment.find_answer_with_mathid(record['mathid'])
   generated_highlight_id = answer.generate_highlight_intercept()
+  # remove all hint
+  sio.emit('set_hint', json.dumps({
+      "mathid": record["mathid"],
+      "version": record["version"],
+      "id": record["value"]["id"],
+      "type": record["value"]["type"],
+      "hint": " ",
+      "mode": "set",
+      "enable": False
+  }), room=sid)
   # add input boxes to real error
   sio.emit('add_input', json.dumps({
       "mathid": record["mathid"],
@@ -108,16 +118,6 @@ def message_result(sid, data):
       "mode": "set"
   }), room=sid)
 
-  # remove all hint
-  sio.emit('set_hint', json.dumps({
-      "mathid": record["mathid"],
-      "version": record["version"],
-      "id": record["value"]["id"],
-      "type": record["value"]["type"],
-      # "hint": "&Hint " + str(hintCounter) + " supplied by <b>Python</b>",
-      "mode": "set",
-      "enable": False
-  }), room=sid)
   # if "hint" not in record["value"]:
   #   sio.emit('set_hint', json.dumps({
   #     "mathid": record["mathid"],
