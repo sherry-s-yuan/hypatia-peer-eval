@@ -38,7 +38,7 @@ class Assignment:
                 'userid': self.userid,
                 'username': self.username}
             json_obj.update(answer.to_json())
-        result.append(json_obj)
+            result.append(json_obj)
         return result
 
     def find_exp_with_id(self, id: str):

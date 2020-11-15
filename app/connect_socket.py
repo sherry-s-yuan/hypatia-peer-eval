@@ -78,8 +78,9 @@ def message_result(sid, data):
   # parser json to python data structure
   record = json.loads(data)
   hint = record['value']['hint'] if 'hint' in record['value'] else None
-  reader.add_error(record['docid'], record['problem'], record['value']['id'], record['value']['type'], hint)
-  print("Error added to", record['docid'], record['problem'], record['value']['id'], record['value']['type'], hint)
+  if 'id' in record['value']:
+    reader.add_error(record['docid'], record['problem'], record['value']['id'], record['value']['type'], hint)
+    print("Error added to", record['docid'], record['problem'], record['value']['id'], record['value']['type'], hint)
   print(reader.assignments[0].to_json(2))
 
   assignment = reader.find_assign_with_id(record['docid'])
