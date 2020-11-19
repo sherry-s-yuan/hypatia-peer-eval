@@ -7,9 +7,14 @@ from rest_framework import status
 from hypatia.models import Storer
 from hypatia.serializers import StorerSerializer
 from rest_framework.decorators import api_view
-
+from django.http import HttpResponse
 
 # Create your views here.
+
+
+def home(request):
+    return HttpResponse('home')
+
 
 @api_view(['GET', 'POST'])
 def doc_list(request):
