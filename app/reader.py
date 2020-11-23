@@ -7,6 +7,10 @@ from app.answer import Answer
 class Reader:
     def __init__(self):
         self.assignments = []
+        self.total_highlight = 0
+        self.correct_feedback = 0
+        self.wrong_feedback = 0
+        self.num_error = 0
 
     def assignment_from_json_file(self, fn: str):
         with open(fn) as f:
@@ -59,4 +63,28 @@ class Reader:
             print("Cannot find expression with this error")
             return
         exp.add_error(error_type, hint)
+
+    # self.total_highlight = 0
+    # self.correct_feedback = 0
+    # self.wrong_feedback = 0
+    # self.num_error = 0
+    def record_total_highlight(self, num=1):
+        self.total_highlight += num
+
+    def record_error_count(self, num=1):
+        self.num_error += num
+
+    def feedback_eval(self, feedback):
+        return True
+
+    def record_feedback_score(self, docid, id, feedback):
+        if not self.feedback_eval(feedback):
+            # skip if the feedback is too simple/incorrect
+            return
+        assignment = self.find_assign_with_id(docid)
+        exp = assignment.find_exp_with_id(id)
+        if exp._subtree_contain_error():
+            self.correct_feedback += 1
+        else:
+            self.wrong_feedback += 1
 
