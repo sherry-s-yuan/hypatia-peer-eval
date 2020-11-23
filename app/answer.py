@@ -33,11 +33,26 @@ class Answer:
             if exp is not None: return exp
         return None
 
+    # def generate_highlight_intercept(self):
+    #     equation_ind = random.randrange(len(self.lines))
+    #     eq = self.lines[equation_ind]
+    #     generated_id = eq.generate_highlight_intercept()
+    #     if generated_id:
+    #         return generated_id
+    #     else:
+    #         pass # regenerate again?
+
     def generate_highlight_intercept(self):
-        equation_ind = random.randrange(len(self.lines))
-        eq = self.lines[equation_ind]
-        generated_id = eq.generate_highlight_intercept()
+        highest_score = 0
+        highest_score_equation = self.lines[0]
+        for eq in self.lines:
+            difficulty_score = eq.get_difficulty_score()
+            if difficulty_score > highest_score:
+                highest_score = difficulty_score
+                highest_score_equation = eq
+        generated_id = highest_score_equation.generate_highlight_intercept()
         if generated_id:
             return generated_id
         else:
             pass # regenerate again?
+

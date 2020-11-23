@@ -88,7 +88,7 @@ def message_result(sid, data):
     assignment = reader.find_assign_with_id(record['docid'])
     answer = assignment.find_answer_with_mathid(record['mathid'])
     generated_highlight_id = answer.generate_highlight_intercept()
-
+    print("trick error at" + generated_highlight_id)
     # add input boxes to real error
     sio.emit('add_input', json.dumps({
         "mathid": record["mathid"],

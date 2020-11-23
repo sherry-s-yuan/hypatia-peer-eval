@@ -8,6 +8,7 @@ class Expression:
         self.has_error = False
         self.err_type = None
         self.hint = None
+        self.score = 0
 
     @classmethod
     def from_json(cls, exp: dict):
@@ -58,9 +59,37 @@ class Expression:
             contain_error = contain_error or child._subtree_contain_error()
         return contain_error
 
+    # def generate_highlight_intercept(self):
+    #     # if there are only 1 more level below it, then generate this if it contain no error
+    #     if self.children is None or self.children[0].children is None:
+    #         if not self._subtree_contain_error() and self.id is not None and self.command != '=':
+    #             return self.id
+
     def generate_highlight_intercept(self):
         # if there are only 1 more level below it, then generate this if it contain no error
         if self.children is None or self.children[0].children is None:
             if not self._subtree_contain_error() and self.id is not None and self.command != '=':
                 return self.id
+        else
 
+    def get_difficulty_score(self):
+        check = False
+        weight_dict = {0: ["Plus", "Minus", "Multiply", "Divide", "ExpressionList", "Symbol", "Number", "="],
+                       0.2: ["Root"],
+                       0.4: ["Sum", "Product"],
+                       0.6: ["TrigFunction"],
+                       0.8: ["Exponent", "Log", ""],
+                       1: ["Limit", "->", "Derivative", "Integral", "DefIntegral"]}
+        for weight in weight_dict:
+            if self.command in weight_dict[weight]:
+                self.score += weight
+                check = True
+                break
+        if not check:
+            self.score += 1
+        if self.children is None:
+            return self.score
+        else:
+            for child in self.children:
+                self.score += child.get_difficulty_score()
+        return self.score
