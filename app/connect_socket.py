@@ -77,11 +77,13 @@ def message_result(sid, data):
     print("generated id", generated_highlight_id)
 
     # add input boxes to real error
+    print("input-id", record["value"]["id"])
     sio.emit('add_input', json.dumps({
         "mathid": record["mathid"],
         "version": record["version"],
         "id": record["value"]["id"],
         "input-id": record["value"]["id"],
+        # "color": "#FFFFFFAA",  # "#ff5040",
         "type": record["value"]["type"],
         "hint": "Type feedback here...",
         "mode": "set"
@@ -94,7 +96,7 @@ def message_result(sid, data):
             "version": record["version"],
             "id": generated_highlight_id,
             "input-id": generated_highlight_id,
-            "color": "#ff5040",
+            # "color": "#FFFFFFAA",# "#ff5040",
             "type": record["value"]["type"],
             "hint": "Type feedback here...",
             "mode": "set"
@@ -124,16 +126,46 @@ def message_result(sid, data):
 
 @sio.on('input_submit')
 def print_result(sid, data):
-    print('Student Response:\n', data)
+    # print('Student Response:\n', data)
     record = json.loads(data)
-    if "id" in record:
-        docid, id, feedback = record["docid"], record["id"], record["value"]
-        reader.record_feedback_score(docid, id, feedback)
+    if "id" in record["value"]:
+        docid, id, feedback = record["docid"], record["value"]["id"], record["value"]["response"]
+        if id is None:
+            print("Something Went Wrong, Please Try Again")
+            return
+        id = id.rstrip('-button')
+        correct = reader.record_feedback_score(docid, id, feedback)
+        # if correct is True:
+        #     print("set correct hint")
+        #     sio.emit('set_hint', json.dumps({
+        #         "mathid": record["mathid"],
+        #         "version": record["version"],
+        #         "id": id,
+        #         "type": "feedback_submitted",
+        #         "hint": "You have submitted a correct response",
+        #         "color": "#4fff9580",
+        #         "mode": "set",
+        #     }), room=sid)
+        # elif correct is False:
+        #     print("set incorrect hint")
+        #     sio.emit('set_hint', json.dumps({
+        #         "mathid": record["mathid"],
+        #         "version": record["version"],
+        #         "id": id,
+        #         "type": "feedback_submitted",
+        #         "hint": "You have submitted an incorrect response",
+        #         "color": "#ff504080",
+        #         "mode": "set",
+        #     }), room=sid)
+
+    print("Your current score is: ", reader.calculate_score())
+    reader.print_scores()
 
 
 @sio.on('disconnect')
 def disconnect(sid):
     print('disconnect ', sid)
+
 
 
 if __name__ == '__main__':

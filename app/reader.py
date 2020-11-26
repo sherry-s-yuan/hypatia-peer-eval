@@ -7,10 +7,12 @@ from app.answer import Answer
 class Reader:
     def __init__(self):
         self.assignments = []
+        self.id2feedback = {}
         self.total_highlight = 0
         self.correct_feedback = 0
         self.wrong_feedback = 0
         self.num_error = 0
+        self.trial = 0
 
     def assignment_from_json_file(self, fn: str):
         with open(fn) as f:
@@ -78,13 +80,37 @@ class Reader:
         return True
 
     def record_feedback_score(self, docid, id, feedback):
+        if self.trial == self.num_error:
+            print("You have reached maximum number of trial")
+            return
+        if id in self.id2feedback:
+            print("You cannot submit feedback twice")
+            return
         if not self.feedback_eval(feedback):
             # skip if the feedback is too simple/incorrect
+            print("Your feedback is invalid")
             return
         assignment = self.find_assign_with_id(docid)
         exp = assignment.find_exp_with_id(id)
+        if exp is None:
+            print("Cannot find expression with id: {}".format(id))
+            return
+        self.trial += 1
         if exp._subtree_contain_error():
+            self.id2feedback[id] = (feedback, "correct")
             self.correct_feedback += 1
+            return True
         else:
+            self.id2feedback[id] = (feedback, "incorrect")
             self.wrong_feedback += 1
+            return False
+
+    def calculate_score(self):
+        return self.correct_feedback/self.num_error
+
+    def print_scores(self):
+        print("Number of Correct Feedback: ", self.correct_feedback)
+        print("Number of Wrong Feedback: ", self.wrong_feedback)
+        print("Number of Actual Error: ", self.num_error)
+        print("Number of Highlight: ", self.total_highlight)
 
