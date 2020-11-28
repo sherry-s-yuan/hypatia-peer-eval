@@ -40,9 +40,6 @@ def connect(sid, environ):
 @sio.on('expressions')
 def message_expressions(sid, data):
     print('expressions:\n', data)
-    # with open('expression_example.json', 'w') as f:
-    #     json.dump(data, f)
-    # parser json to python data structure
     record = json.loads(data)
     reader.assignment_from_json_stream(record)
     print('Number of Assignments', len(reader.assignments))
@@ -86,8 +83,6 @@ def message_result(sid, data):
     reader.record_error_count()
     reader.record_total_highlight()
     print('result:\n', data)
-    # with open('result_example_{}.json'.format(error_counter), 'w') as f:
-    #     json.dump(data, f)
 
     # parser json to python data structure
     record = json.loads(data)
@@ -110,7 +105,6 @@ def message_result(sid, data):
         "version": record["version"],
         "id": record["value"]["id"],
         "input-id": record["value"]["id"],
-        # "color": "#FFFFFFAA",  # "#ff5040",
         "type": record["value"]["type"],
         "hint": "Type feedback here...",
         "mode": "set"
@@ -123,7 +117,6 @@ def message_result(sid, data):
             "version": record["version"],
             "id": generated_highlight_id,
             "input-id": generated_highlight_id,
-            # "color": "#FFFFFFAA",# "#ff5040",
             "type": record["value"]["type"],
             "hint": "Type feedback here...",
             "mode": "set"
@@ -135,25 +128,13 @@ def message_result(sid, data):
         "version": record["version"],
         "id": record["value"]["id"],
         "type": record["value"]["type"],
-        # "hint": "&Hint " + str(hintCounter) + " supplied by <b>Python</b>",
         "mode": "set",
         "enable": False
     }), room=sid)
-    # if "hint" not in record["value"]:
-    #   sio.emit('set_hint', json.dumps({
-    #     "mathid": record["mathid"],
-    #     "version": record["version"],
-    #     "id": record["value"]["id"],
-    #     "type": record["value"]["type"],
-    #     "hint": "&Hint " + str(hintCounter) + " supplied by <b>Python</b>",
-    #     "mode": "set"
-    #   }), room=sid)
-    # hintCounter += 1
 
 
 @sio.on('input_submit')
 def print_result(sid, data):
-    # print('Student Response:\n', data)
     record = json.loads(data)
     if "id" in record["value"]:
         docid, id, feedback = record["docid"], record["value"]["id"], record["value"]["response"]
@@ -162,28 +143,6 @@ def print_result(sid, data):
             return
         id = id.rstrip('-button')
         correct = reader.record_feedback_score(docid, id, feedback)
-        # if correct is True:
-        #     print("set correct hint")
-        #     sio.emit('set_hint', json.dumps({
-        #         "mathid": record["mathid"],
-        #         "version": record["version"],
-        #         "id": id,
-        #         "type": "feedback_submitted",
-        #         "hint": "You have submitted a correct response",
-        #         "color": "#4fff9580",
-        #         "mode": "set",
-        #     }), room=sid)
-        # elif correct is False:
-        #     print("set incorrect hint")
-        #     sio.emit('set_hint', json.dumps({
-        #         "mathid": record["mathid"],
-        #         "version": record["version"],
-        #         "id": id,
-        #         "type": "feedback_submitted",
-        #         "hint": "You have submitted an incorrect response",
-        #         "color": "#ff504080",
-        #         "mode": "set",
-        #     }), room=sid)
 
     print("Your current score is: ", reader.calculate_score())
     reader.print_scores()
@@ -194,9 +153,6 @@ def disconnect(sid):
     print('disconnect ', sid)
 
 
-
 if __name__ == '__main__':
     dummy_data()
     eventlet.wsgi.server(eventlet.listen(('localhost', 3333)), app)
-    # [{'docid': '868.2.12', 'docname': 'Assignment.ezt *', 'userid': 1292, 'username': 'sherry yuan', 'mathid': 'tex8.mth1292-7', 'version': 146, 'problem': 2, 'value': [[{'command': 'Plus', 'id': 'chr1292-13864$chr1292-13866', 'children': [{'command': 'Symbol', 'value': 'a', 'id': 'chr1292-13864$chr1292-13864'}, {'command': 'Symbol', 'value': 'b', 'id': 'chr1292-13866$chr1292-13866'}]}, {'command': '=', 'id': 'chr1292-13869$chr1292-13869'}, {'command': 'Plus', 'id': 'chr1292-13871$chr1292-13963', 'children': [{'command': 'Plus', 'id': 'chr1292-13871$chr1292-13961', 'children': [{'command': 'Number', 'value': '3', 'id': 'chr1292-13871$chr1292-13871'}, {'command': 'Number', 'value': '4', 'id': 'chr1292-13961$chr1292-13961'}]}, {'command': 'Number', 'value': '7', 'id': 'chr1292-13963$chr1292-13963'}]}], [{'command': 'Plus', 'id': 'chr1292-13877$chr1292-13879', 'children': [{'command': 'Number', 'value': '3', 'id': 'chr1292-13877$chr1292-13877'}, {'command': 'Number', 'value': '4', 'id': 'chr1292-13879$chr1292-13879'}]}, {'command': '=', 'id': 'chr1292-13882$chr1292-13882'}, {'command': 'Number', 'value': '7', 'id': 'chr1292-13884$chr1292-13884'}, {'command': '=', 'id': 'chr1292-13966$chr1292-13966'}, {'command': 'Plus', 'id': 'chr1292-13969$chr1292-13971', 'children': [{'command': 'Number', 'value': '8', 'id': 'chr1292-13969$chr1292-13969'}, {'command': 'Number', 'value': '4', 'id': 'chr1292-13971$chr1292-13971'}]}], [{'command': 'Number', 'value': '5', 'id': 'chr1292-13890$chr1292-13890'}, {'command': '=', 'id': 'chr1292-13893$chr1292-13893'}, {'command': 'Number', 'value': '8', 'id': 'chr1292-13895$chr1292-13895'}], [{'command': 'Multiply', 'id': 'chr1292-13901$chr1292-13903', 'children': [{'command': 'Number', 'value': '3', 'id': 'chr1292-13901$chr1292-13901'}, {'command': 'Number', 'value': '5', 'id': 'chr1292-13903$chr1292-13903'}]}, {'command': '=', 'id': 'chr1292-13906$chr1292-13906'}, {'command': 'Number', 'value': '15', 'id': 'chr1292-13908$chr1292-13909'}], [{'command': 'Symbol', 'value': 'l', 'id': 'chr1292-13915$chr1292-13915'}, {'command': '=', 'id': 'chr1292-13918$chr1292-13918'}, {'command': 'Plus', 'id': 'chr1292-13920$chr1292-13923', 'children': [{'command': 'Multiply', 'id': 'chr1292-13920$chr1292-13921', 'children': [{'command': 'Number', 'value': '3', 'id': 'chr1292-13920$chr1292-13920'}, {'command': 'Symbol', 'value': 'x', 'id': 'chr1292-13921$chr1292-13921'}]}, {'command': 'Number', 'value': '5', 'id': 'chr1292-13923$chr1292-13923'}]}], [{'command': 'Derivative', 'id': 'chr1292-13929$chr1292-13935', 'children': [{'command': 'Symbol', 'value': 'l', 'id': 'chr1292-13935$chr1292-13935'}, {'command': 'ExpressionList', 'id': 'chr1292-13938$chr1292-13938', 'children': [{'command': 'Symbol', 'value': 'x', 'id': 'chr1292-13938$chr1292-13938'}]}, {'command': 'Number', 'value': '1'}]}, {'command': '=', 'id': 'chr1292-13942$chr1292-13942'}, {'command': 'Number', 'value': '3', 'id': 'chr1292-13944$chr1292-13944'}]]}]
-    #
