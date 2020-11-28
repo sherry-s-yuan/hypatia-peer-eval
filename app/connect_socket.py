@@ -47,22 +47,6 @@ def message_expressions(sid, data):
     print('Number of Assignments', len(reader.assignments))
     print('Number of Answers', len(reader.assignments[0].answers))
 
-    # # demo:
-    # #   show a yellow box around each plus expression
-    # #   Note: make sure to reduce opacity of the color (37 below) otherwise it
-    # #   will cover the math
-    # for node in list(gen_dict_extract(record, 'command', 'Plus')):
-    #   sio.emit('add_box', json.dumps({
-    #     "mathid": record["mathid"],
-    #     "version": record["version"],
-    #     "id": node["id"],
-    #     "type": "math-custom",
-    #     "hint": "This is an addition recognized by Python",
-    #     "color": "#FFFF0037",
-    #     "border_color": "#FFFFFFAA",
-    #     "border_width": "3px"
-    #   }), room=sid)
-
 
 error_counter = 0
 
@@ -72,6 +56,8 @@ def message_result(sid, data):
     global error_counter
     global hintCounter
     error_counter += 1
+    reader.record_error_count()
+    reader.record_total_highlight()
     print('result:\n', data)
     # with open('result_example_{}.json'.format(error_counter), 'w') as f:
     #     json.dump(data, f)
@@ -88,29 +74,33 @@ def message_result(sid, data):
     assignment = reader.find_assign_with_id(record['docid'])
     answer = assignment.find_answer_with_mathid(record['mathid'])
     generated_highlight_id = answer.generate_highlight_intercept()
+    print("generated id", generated_highlight_id)
 
     # add input boxes to real error
+    print("input-id", record["value"]["id"])
     sio.emit('add_input', json.dumps({
         "mathid": record["mathid"],
         "version": record["version"],
         "id": record["value"]["id"],
         "input-id": record["value"]["id"],
+        # "color": "#FFFFFFAA",  # "#ff5040",
         "type": record["value"]["type"],
         "hint": "Type feedback here...",
         "mode": "set"
     }), room=sid)
-
-    # add input box to generated error
-    sio.emit('add_input', json.dumps({
-        "mathid": record["mathid"],
-        "version": record["version"],
-        "id": generated_highlight_id,
-        "input-id": generated_highlight_id,
-        "color": "#ff5040",
-        "type": record["value"]["type"],
-        "hint": "Type feedback here...",
-        "mode": "set"
-    }), room=sid)
+    if generated_highlight_id is not None:
+        reader.record_total_highlight()
+        # add input box to generated error
+        sio.emit('add_input', json.dumps({
+            "mathid": record["mathid"],
+            "version": record["version"],
+            "id": generated_highlight_id,
+            "input-id": generated_highlight_id,
+            # "color": "#FFFFFFAA",# "#ff5040",
+            "type": record["value"]["type"],
+            "hint": "Type feedback here...",
+            "mode": "set"
+        }), room=sid)
 
     # remove all hint
     sio.emit('set_hint', json.dumps({
@@ -136,12 +126,46 @@ def message_result(sid, data):
 
 @sio.on('input_submit')
 def print_result(sid, data):
-    print('Student Response:\n', data)
+    # print('Student Response:\n', data)
+    record = json.loads(data)
+    if "id" in record["value"]:
+        docid, id, feedback = record["docid"], record["value"]["id"], record["value"]["response"]
+        if id is None:
+            print("Something Went Wrong, Please Try Again")
+            return
+        id = id.rstrip('-button')
+        correct = reader.record_feedback_score(docid, id, feedback)
+        # if correct is True:
+        #     print("set correct hint")
+        #     sio.emit('set_hint', json.dumps({
+        #         "mathid": record["mathid"],
+        #         "version": record["version"],
+        #         "id": id,
+        #         "type": "feedback_submitted",
+        #         "hint": "You have submitted a correct response",
+        #         "color": "#4fff9580",
+        #         "mode": "set",
+        #     }), room=sid)
+        # elif correct is False:
+        #     print("set incorrect hint")
+        #     sio.emit('set_hint', json.dumps({
+        #         "mathid": record["mathid"],
+        #         "version": record["version"],
+        #         "id": id,
+        #         "type": "feedback_submitted",
+        #         "hint": "You have submitted an incorrect response",
+        #         "color": "#ff504080",
+        #         "mode": "set",
+        #     }), room=sid)
+
+    print("Your current score is: ", reader.calculate_score())
+    reader.print_scores()
 
 
 @sio.on('disconnect')
 def disconnect(sid):
     print('disconnect ', sid)
+
 
 
 if __name__ == '__main__':
