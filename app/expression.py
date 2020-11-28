@@ -28,7 +28,6 @@ class Expression:
             json_obj["value"] = self.value
         if self.id is not None:
             json_obj["id"] = self.id
-        # json_obj["error"] = self.has_error #exist for purpose of testing TODO: remove
 
         if self.children is None:
             return json_obj
@@ -50,27 +49,20 @@ class Expression:
             if exp is not None: return exp
         return None
 
-    def _subtree_contain_error(self) -> bool:
+    def subtree_contain_error(self) -> bool:
         '''check if this subtree contain error'''
         contain_error = self.has_error
         if self.children is None:
             return contain_error
         for child in self.children:
-            contain_error = contain_error or child._subtree_contain_error()
+            contain_error = contain_error or child.subtree_contain_error()
         return contain_error
-
-    # def generate_highlight_intercept(self):
-    #     # if there are only 1 more level below it, then generate this if it contain no error
-    #     if self.children is None or self.children[0].children is None:
-    #         if not self._subtree_contain_error() and self.id is not None and self.command != '=':
-    #             return self.id
 
     def generate_highlight_intercept(self):
         # if there are only 1 more level below it, then generate this if it contain no error
-        if self.children is None or self.children[0].children is None:
-            if not self._subtree_contain_error() and self.id is not None and self.command != '=':
-                return self.id
-        else
+        # if self.children is None or self.children[0].children is None:
+        if not self.subtree_contain_error() and self.id is not None and self.command != '=':
+            return self.id
 
     def get_difficulty_score(self):
         check = False
@@ -78,7 +70,7 @@ class Expression:
                        0.2: ["Root"],
                        0.4: ["Sum", "Product"],
                        0.6: ["TrigFunction"],
-                       0.8: ["Exponent", "Log", ""],
+                       0.8: ["Exponent", "Log"],
                        1: ["Limit", "->", "Derivative", "Integral", "DefIntegral"]}
         for weight in weight_dict:
             if self.command in weight_dict[weight]:

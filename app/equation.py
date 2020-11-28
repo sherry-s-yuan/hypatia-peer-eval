@@ -22,20 +22,19 @@ class Equation:
             exp = expression.find_exp_with_id(id)
             if exp is not None: return exp
         return None
-    #
-    # def generate_highlight_intercept(self):
-    #     exp_ind = random.randrange(len(self.expressions))
-    #     exp = self.expressions[exp_ind]
-    #     return exp.generate_highlight_intercept()
 
     def generate_highlight_intercept(self):
         highest_score = 0
-        highest_score_expression = self.expressions[0]
+        equal_bool = False
+        highest_score_expression = self.expressions[-1]
         for ex in self.expressions:
-            difficulty_score = ex.get_difficulty_score()
-            if difficulty_score > highest_score:
-                highest_score = difficulty_score
-                highest_score_expression = ex
+            if ex.command == "=":
+                equal_bool = True
+            if equal_bool:
+                difficulty_score = ex.get_difficulty_score()
+                if difficulty_score > highest_score:
+                    highest_score = difficulty_score
+                    highest_score_expression = ex
         return highest_score_expression.generate_highlight_intercept()
 
     def get_difficulty_score(self):
@@ -43,3 +42,9 @@ class Equation:
         for exp in self.expressions:
             score += exp.get_difficulty_score()
         return score
+
+    def contains_error(self):
+        for exp in self.expressions:
+            if exp.subtree_contain_error():
+                return True
+        return False
