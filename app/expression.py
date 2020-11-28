@@ -50,7 +50,7 @@ class Expression:
         return None
 
     def subtree_contain_error(self) -> bool:
-        '''check if this subtree contain error'''
+        """Check if this subtree contain error"""
         contain_error = self.has_error
         if self.children is None:
             return contain_error

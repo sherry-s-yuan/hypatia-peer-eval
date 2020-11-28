@@ -1,5 +1,4 @@
 from app.equation import Equation
-import random
 
 
 class Answer:

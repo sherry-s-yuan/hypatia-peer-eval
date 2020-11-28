@@ -1,5 +1,4 @@
 from app.expression import Expression
-import random
 
 
 class Equation:
