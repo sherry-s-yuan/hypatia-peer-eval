@@ -1,5 +1,5 @@
 from app.equation import Equation
-import random
+
 
 class Answer:
     def __init__(self, mathid: str, version: int, problem: int, raw_lines: [],
@@ -34,10 +34,18 @@ class Answer:
         return None
 
     def generate_highlight_intercept(self):
-        equation_ind = random.randrange(len(self.lines))
-        eq = self.lines[equation_ind]
-        generated_id = eq.generate_highlight_intercept()
+        highest_score = 0
+        highest_score_equation = self.lines[0]
+        for eq in self.lines:
+            difficulty_score = eq.get_difficulty_score()
+            if difficulty_score > highest_score:
+                highest_score = difficulty_score
+                highest_score_equation = eq
+            elif difficulty_score == highest_score:
+                if highest_score_equation.contains_error():
+                    highest_score_equation = eq
+        generated_id = highest_score_equation.generate_highlight_intercept()
         if generated_id:
             return generated_id
         else:
-            pass # regenerate again?
+            pass  # regenerate again?

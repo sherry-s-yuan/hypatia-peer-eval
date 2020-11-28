@@ -1,4 +1,3 @@
-# a builder
 import json
 from app.assignment import Assignment
 from app.answer import Answer
@@ -66,10 +65,6 @@ class Reader:
             return
         exp.add_error(error_type, hint)
 
-    # self.total_highlight = 0
-    # self.correct_feedback = 0
-    # self.wrong_feedback = 0
-    # self.num_error = 0
     def record_total_highlight(self, num=1):
         self.total_highlight += num
 
@@ -96,7 +91,7 @@ class Reader:
             print("Cannot find expression with id: {}".format(id))
             return
         self.trial += 1
-        if exp._subtree_contain_error():
+        if exp.subtree_contain_error():
             self.id2feedback[id] = (feedback, "correct")
             self.correct_feedback += 1
             return True
