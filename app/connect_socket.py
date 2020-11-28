@@ -69,8 +69,6 @@ def dummy_data():
     #     "border_width": "3px"
     #   }), room=sid)
 
-=======
->>>>>>> 039e8452f3d75c4c9a22a10c87f517a1d9eecf04
 
 error_counter = 0
 
