@@ -9,6 +9,8 @@ class Storer(models.Model):
     answers = models.JSONField()
     contains_error = models.BooleanField(null=True)
 
+    objects = models.Manager()
+
 
 class Feedback(models.Model):
     original_author_id = models.ForeignKey(Storer, on_delete=models.PROTECT,
@@ -19,3 +21,8 @@ class Feedback(models.Model):
     editor_id = models.IntegerField(null=True)
     feedback = models.TextField(null=True)
     date_created = models.DateTimeField(auto_now_add=True)
+
+
+class Classroom(models.Model):
+    num_assignments = models.IntegerField()
+    num_answers = models.IntegerField()

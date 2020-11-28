@@ -20,5 +20,6 @@ from django.conf.urls import url, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^', include('hypatia.urls'))
+    path('home/', include('hypatia.urls'))
+
 ]
