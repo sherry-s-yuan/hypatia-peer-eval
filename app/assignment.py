@@ -52,8 +52,5 @@ class Assignment:
             if answer.mathid == id:
                 return answer
 
-
-
-
     def __eq__(self, other):
         return self.docid == other.docid
