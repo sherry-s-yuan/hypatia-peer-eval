@@ -39,18 +39,20 @@ class Reader:
         return assignment
 
     def add_assignment(self, assignment: Assignment, answer: Answer):
-        # add new assignment if does not exist
-        # otherwise update answer in existing assignment
-        ass_with_same_id = self.find_assign_with_id(assignment.docid)
+    # add new assignment if does not exist
+    # otherwise update answer in existing assignment
+        ass_with_same_id = self.find_assign_with_id('.'.join(assignment.docid.split('.')[0:2]))
         if ass_with_same_id is None:
             self.assignments.append(assignment)
         else:
             ass_with_same_id.add_answer(answer)
 
     def find_assign_with_id(self, docid) -> Assignment:
-        '''return assignment object with the same given docid'''
+        """return assignment object with the same given docid"""
         for a in self.assignments:
-            if a.docid == docid:
+            doc1 = '.'.join(a.docid.split('.')[0:2])
+            doc2 = '.'.join(docid.split('.')[0:2])
+            if doc1 == doc2:
                 return a
 
     def add_error(self, docid: str, problem_num: int, command_id: str, error_type: str, hint: str):

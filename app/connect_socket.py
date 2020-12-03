@@ -1,6 +1,7 @@
 import eventlet
 import socketio
 import json
+import requests
 from app.reader import Reader
 
 sio = socketio.Server(cors_allowed_origins='*')
@@ -8,6 +9,7 @@ app = socketio.WSGIApp(sio)
 hintCounter = 1
 
 reader = Reader()
+db_data = {}
 
 
 # return all elements containing key <key> set to value <value>
@@ -45,6 +47,23 @@ def message_expressions(sid, data):
     print('Number of Answers', len(reader.assignments[0].answers))
 
 
+# # demo:
+# #   show a yellow box around each plus expression
+# #   Note: make sure to reduce opacity of the color (37 below) otherwise it
+# #   will cover the math
+# for node in list(gen_dict_extract(record, 'command', 'Plus')):
+#   sio.emit('add_box', json.dumps({
+#     "mathid": record["mathid"],
+#     "version": record["version"],
+#     "id": node["id"],
+#     "type": "math-custom",
+#     "hint": "This is an addition recognized by Python",
+#     "color": "#FFFF0037",
+#     "border_color": "#FFFFFFAA",
+#     "border_width": "3px"
+#   }), room=sid)
+
+
 error_counter = 0
 
 
@@ -61,10 +80,12 @@ def message_result(sid, data):
     record = json.loads(data)
     hint = record['value']['hint'] if 'hint' in record['value'] else None
     if 'id' in record['value']:
-        reader.add_error(record['docid'], record['problem'], record['value']['id'], record['value']['type'], hint)
-        print("Error added to", record['docid'], record['problem'], record['value']['id'], record['value']['type'],
+        reader.add_error(record['docid'], record['problem'],
+                         record['value']['id'], record['value']['type'], hint)
+        print("Error added to", record['docid'], record['problem'],
+              record['value']['id'], record['value']['type'],
               hint)
-    print(reader.assignments[0].to_json(2))
+    format_data_to_db(record, record['problem'])
 
     assignment = reader.find_assign_with_id(record['docid'])
     answer = assignment.find_answer_with_mathid(record['mathid'])
@@ -109,8 +130,10 @@ def message_result(sid, data):
 @sio.on('input_submit')
 def print_result(sid, data):
     record = json.loads(data)
+    db_data["editor_id"] = record["userid"]
     if "id" in record["value"]:
-        docid, id, feedback = record["docid"], record["value"]["id"], record["value"]["response"]
+        docid, id, feedback = record["docid"], record["value"]["id"], \
+                              record["value"]["response"]
         if id is None:
             print("Something Went Wrong, Please Try Again")
             return
@@ -120,6 +143,44 @@ def print_result(sid, data):
     print("Your current score is: ", reader.calculate_score())
     reader.print_scores()
 
+    # Once the editor has inputted all the feedback, the information gets sent to the databse
+    if reader.num_error == reader.trial:
+        db_data["score"] = reader.calculate_score()*100
+        print(db_data)
+        db_data["feedback"] = reader.id2feedback
+        url = "http://127.0.0.1:8000/home/save"
+        result = requests.post(url, json.dumps(db_data))
+        if str(result.status_code) != "200":
+            print("Failed")
+            print(result.text)
+        else:
+            print("Success!")
+
+
+def format_data_to_db(record, problem_num):
+    print(problem_num)
+    if len(db_data) == 0:
+        db_data["userid"] = record["userid"]
+        db_data["docid"] = ".".join([record["docid"].rsplit(".", 1)[0],
+                                     str(db_data["userid"])])
+        db_data["answers"] = {}
+        db_data["contains_error"] = False
+        for answer in reader.assignments[0].answers:
+            for line in answer.lines:
+                if line.contains_error:
+                    db_data["contains_error"] = True
+                    break
+
+    if problem_num not in db_data["answers"]:
+        db_data["answers"][problem_num] = []
+    for i in range(len(reader.assignments[0].to_json(problem_num))):
+        if reader.assignments[0].to_json(problem_num)[i]["value"] \
+                not in db_data["answers"][problem_num]:
+            db_data["answers"][problem_num].append(
+                reader.assignments[0].to_json(problem_num)[i][
+                    "value"])
+            print(db_data)
+
 
 @sio.on('disconnect')
 def disconnect(sid):
@@ -128,3 +189,4 @@ def disconnect(sid):
 
 if __name__ == '__main__':
     eventlet.wsgi.server(eventlet.listen(('localhost', 3333)), app)
+
