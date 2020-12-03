@@ -5,7 +5,7 @@ from rest_framework import generics
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
-from .models import Storer, Feedback, Classroom
+from .models import Storer, Feedback
 from .serializers import StorerSerializer
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
@@ -29,8 +29,9 @@ def create_view(request):
 
 @csrf_exempt
 def save_data(request):
-    body = request.body.decode("utf-8")
-    load_data = json.loads(body)
-    classroom = Classroom(num_assignments=load_data["NumAssignments"], num_answers=load_data["NumAnswers"])
-    classroom.save()
-    return HttpResponse("Got save data request")
+    pass
+#     body = request.body.decode("utf-8")
+#     load_data = json.loads(body)
+#     classroom = Classroom(num_assignments=load_data["NumAssignments"], num_answers=load_data["NumAnswers"])
+#     classroom.save()
+#     return HttpResponse("Got save data request")

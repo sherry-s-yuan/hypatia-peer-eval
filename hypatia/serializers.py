@@ -6,4 +6,4 @@ class StorerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Storer
-        fields = ('original_author_id', 'doc_id', 'answers', 'contains_error')
+        fields = ('doc_id', 'original_author_id', 'answers', 'contains_error')

@@ -1,6 +1,7 @@
 from app.answer import Answer
 import random
 
+
 class Assignment:
     answers: [Answer]
     student_id: int
