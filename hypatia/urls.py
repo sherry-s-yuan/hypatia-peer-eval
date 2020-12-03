@@ -7,5 +7,5 @@ urlpatterns = [
     # path('', StorerView.as_view(), name='as_view')
     path("", home, name="go_to_home"),
     path("basic_view", create_view, name="basic_view"),
-    # path("save", save_data, name="save")
+    path("save", save_data, name="save")
 ]
