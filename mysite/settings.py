@@ -87,7 +87,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'hypatia-database',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'shyu0929',
+        # 'PASSWORD': 'postgres',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
