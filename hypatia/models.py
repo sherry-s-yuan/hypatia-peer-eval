@@ -22,3 +22,4 @@ class Feedback(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     score = models.IntegerField(null=True)
     objects = models.Manager()
+

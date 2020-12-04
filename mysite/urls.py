@@ -23,3 +23,4 @@ urlpatterns = [
     path('home/', include('hypatia.urls'))
 
 ]
+
