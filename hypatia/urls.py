@@ -9,3 +9,4 @@ urlpatterns = [
     path("basic_view", create_view, name="basic_view"),
     path("save", save_data, name="save")
 ]
+

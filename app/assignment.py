@@ -55,3 +55,4 @@ class Assignment:
 
     def __eq__(self, other):
         return self.docid == other.docid
+
