@@ -8,8 +8,8 @@ class Storer(models.Model):
     original_author_id = models.IntegerField(default='', null=True)
     answers = models.JSONField()
     contains_error = models.BooleanField(null=True)
-
     objects = models.Manager()
+
 
 
 class Feedback(models.Model):
