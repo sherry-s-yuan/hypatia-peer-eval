@@ -1,0 +1,57 @@
+{% block content %}
+<head>
+    {% load static %}
+    <!--<link rel="stylesheet" href="{% static 'js/app.js' %}">-->
+    <script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+    <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<title>Summary Table</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<h1>Result For Evaluators</h1>
+
+<div class="limiter">
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <div class="table100">
+                <table class="table">
+                    <thead>
+                        <tr class="table100-head">
+                            <th class="column1">Editor</th>
+                            <th class="column2">Original Author</th>
+                            <th class="column3">Feedback</th>
+                            <th class="column4">Correctness</th>
+                            <th class="column5">Final Score</th>
+                        </tr>
+                    </thead>
+                    {% for instance in queryset %}
+                    <tbody>
+                        <tr>
+                            <td class="column1">{{instance.editor}}</td>
+                            <td class="column2">{{instance.original_author}}</td>
+                            <td class="column3">{{instance.feedback}}</td>
+                            <td class="column4">{{instance.correctness}}</td>
+                            <td class="column5">{{instance.final_score}}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
